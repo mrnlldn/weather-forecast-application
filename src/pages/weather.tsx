@@ -8,6 +8,7 @@ import {
 } from '@/features/openweather/openweather.client'
 import { GetServerSideProps, NextPage } from 'next'
 import { getServerSession } from 'next-auth'
+import LinkButton from '@/components/link-button'
 
 type Props = {
   /**
@@ -27,9 +28,9 @@ const Forecast: NextPage<Props> = ({ weather }) => {
         <h1 className="text-3xl font-bold text-gray-700">{weather.name}</h1>
       )}
       <WeatherTable data={weather ? [weather] : []} />
-      <Button className="float-right" variant="neutral">
+      <LinkButton href="/" className="float-right" variant="neutral">
         Back
-      </Button>
+      </LinkButton>
     </section>
   )
 }
