@@ -9,7 +9,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <>
       <Navbar />
-      <main className="container mx-auto">{children}</main>
+      <main className="flex flex-col min-h-[30vh] md:min-h-[50vh] items-center justify-center px-4 md:px-0 max-w-3xl mx-auto">
+        {children}
+      </main>
     </>
   )
 }
