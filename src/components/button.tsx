@@ -8,7 +8,7 @@ type ButtonProps = {
 const Button = ({ variant = 'primary', className, ...props }: ButtonProps) => {
   return (
     <button
-      className={clsx('p-2 rounded-md', className, {
+      className={clsx('py-2 rounded-md px-4', className, {
         'bg-blue-500 hover:bg-blue-600 text-white': variant === 'primary',
         'bg-gray-500 hover:bg-gray-600 text-white': variant === 'secondary',
       })}

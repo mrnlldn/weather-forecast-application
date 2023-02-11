@@ -3,7 +3,7 @@ import LandingScreen from '@/features/home/screens/landing.screen'
 
 export default function Home() {
   const isLoggedIn = (() => {
-    return false
+    return true
   })()
 
   if (isLoggedIn) {
