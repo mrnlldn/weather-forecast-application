@@ -1,6 +1,13 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from '@/components/table'
+import { WeatherSchema } from '@/features/openweather/openweather.client'
+import { getDateFromUnix } from '@/utils/date'
+import { convertKelvinToFahrenheit } from '@/utils/temperature'
 
-const WeatherForecastTable = () => {
+type WeatherForecastTableProps = {
+  data: WeatherSchema[]
+}
+
+const WeatherForecastTable = ({ data }: WeatherForecastTableProps) => {
   return (
     <Table className=" w-full">
       <Thead>
@@ -14,22 +21,23 @@ const WeatherForecastTable = () => {
         </Tr>
       </Thead>
       <Tbody>
-        <Tr>
-          <Td>09/01/2020</Td>
-          <Td>75</Td>
-          <Td className="hidden md:table-cell">Sky is clear</Td>
-          <Td className="hidden md:table-cell">Clear</Td>
-          <Td className="hidden md:table-cell">1023.68</Td>
-          <Td className="hidden md:table-cell">100</Td>
-        </Tr>
-        <Tr>
-          <Td>09/01/2020</Td>
-          <Td>75</Td>
-          <Td className="hidden md:table-cell">Sky is clear</Td>
-          <Td className="hidden md:table-cell">Clear</Td>
-          <Td className="hidden md:table-cell">1023.68</Td>
-          <Td className="hidden md:table-cell">100</Td>
-        </Tr>
+        {data.map((d) => {
+          console.log(d.dt)
+          return (
+            <Tr key={d.id}>
+              <Td>{getDateFromUnix(d.dt).toLocaleDateString()}</Td>
+              <Td>{convertKelvinToFahrenheit(d.main.temp).toFixed(2)}</Td>
+              <Td className="hidden md:table-cell">
+                {d.weather[0]?.description ?? '-'}
+              </Td>
+              <Td className="hidden md:table-cell">
+                {d.weather[0]?.main ?? '-'}
+              </Td>
+              <Td className="hidden md:table-cell">{d.main.pressure}</Td>
+              <Td className="hidden md:table-cell">{d.main.humidity}</Td>
+            </Tr>
+          )
+        })}
       </Tbody>
     </Table>
   )

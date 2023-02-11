@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import { z } from 'zod'
 
-type ForecastProps = {
+type WeatherProps = {
   /**
    * Latitude of the target location
    */
@@ -10,33 +10,24 @@ type ForecastProps = {
    * Longitude of the target location
    */
   lon: number
-  /**
-   * Number of days to return
-   */
-  cnt?: number
 }
-const forecastSchema = z.object({
-  city: z.object({
-    name: z.string(),
-    country: z.string(),
+const weatherSchema = z.object({
+  id: z.number(),
+  dt: z.number(),
+  name: z.string(),
+  main: z.object({
+    temp: z.number(),
+    pressure: z.number(),
+    humidity: z.number(),
   }),
-  list: z.array(
+  weather: z.array(
     z.object({
-      dt: z.number().int(),
-      temp: z.object({
-        max: z.number(),
-      }),
-      pressure: z.number(),
-      humidity: z.number(),
-      weather: z.array(
-        z.object({
-          main: z.string(),
-          description: z.string(),
-        }),
-      ),
+      main: z.string(),
+      description: z.string(),
     }),
   ),
 })
+export type WeatherSchema = z.infer<typeof weatherSchema>
 
 type GeocodeProps = {
   /**
@@ -69,24 +60,28 @@ export class OpenWeatherClient {
   constructor(apiKey: string) {
     this.apiKey = apiKey
     this._instance = axios.create({
-      baseURL: 'https://api.openweather.org',
+      baseURL: 'https://api.openweathermap.org/',
     })
   }
 
   /**
-   * Returns the weather forecast for a given location (lat, long)
+   * Returns the weather forecast for a given location (lat, long).
+   *
+   * This API only returns the current weather forecast because the 16 days forecast
+   * is unfortunately not open to free plans
+   *
+   * @link https://openweathermap.org/faq#error401
    */
-  async forecast({ lat, lon, cnt = 10 }: ForecastProps) {
-    const response = await this._instance.get('/data/2.5/forecast/daily', {
+  async weather({ lat, lon }: WeatherProps) {
+    const response = await this._instance.get('/data/2.5/weather', {
       params: {
         lat,
         lon,
-        cnt,
         APPID: this.apiKey,
       },
     })
 
-    const parsedResponse = await forecastSchema.safeParseAsync(response.data)
+    const parsedResponse = await weatherSchema.safeParseAsync(response.data)
     if (parsedResponse.success === false) {
       return null
     }
