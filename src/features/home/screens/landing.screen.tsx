@@ -1,4 +1,5 @@
 import Button from '@/components/button'
+import { signIn } from 'next-auth/react'
 
 /**
  * This screen is displayed on the home page if the user is not logged in
@@ -10,7 +11,9 @@ const LandingScreen = () => {
         Welcome to the weather forecast web application. Please login with your
         Github user to use the application and view the weather in your city.
       </h1>
-      <Button variant="primary">Login</Button>
+      <Button variant="primary" onClick={() => signIn()}>
+        Login
+      </Button>
     </section>
   )
 }
