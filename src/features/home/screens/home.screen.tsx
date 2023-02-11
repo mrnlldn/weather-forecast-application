@@ -4,6 +4,7 @@
  * Using this, the user can search for cities with it's corresponding weather forecast.
  */
 
+import Autocomplete from '@/components/autocomplete'
 import Button from '@/components/button'
 import { useActiveUser } from '@/components/hooks/useActiveUser'
 
@@ -16,7 +17,16 @@ const HomeScreen = () => {
         <p className="text-gray-500 break-all">{user?.email}</p>
       </div>
       <div className="space-y-2 flex flex-col content-center items-center">
-        <input className="border-black border-2 rounded-lg" />
+        <Autocomplete
+          value={null}
+          options={[]}
+          onChange={() => {
+            return
+          }}
+          onInputChange={() => {
+            return
+          }}
+        />
         <Button>Display Weather</Button>
       </div>
     </section>

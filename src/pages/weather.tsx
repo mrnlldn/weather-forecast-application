@@ -1,7 +1,7 @@
 import Button from '@/components/button'
 import { useIsLoggedIn } from '@/components/hooks/useIsLoggedIn'
-import WeatherForecastTable from '@/features/forecast/components/weather-forecast-table'
-import { weatherQuerySchema } from '@/features/forecast/validations/weather.validation'
+import WeatherTable from '@/features/weather/components/weather-table'
+import { weatherQuerySchema } from '@/features/weather/validations/weather.validation'
 import {
   OpenWeatherClient,
   WeatherSchema,
@@ -23,7 +23,10 @@ const Forecast: NextPage<Props> = ({ weather }) => {
 
   return (
     <section className="w-full space-y-6">
-      <WeatherForecastTable data={weather ? [weather] : []} />
+      {weather && (
+        <h1 className="text-3xl font-bold text-gray-700">{weather.name}</h1>
+      )}
+      <WeatherTable data={weather ? [weather] : []} />
       <Button className="float-right" variant="neutral">
         Back
       </Button>

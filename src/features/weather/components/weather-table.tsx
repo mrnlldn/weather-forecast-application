@@ -3,11 +3,11 @@ import { WeatherSchema } from '@/features/openweather/openweather.client'
 import { getDateFromUnix } from '@/utils/date'
 import { convertKelvinToFahrenheit } from '@/utils/temperature'
 
-type WeatherForecastTableProps = {
+type WeatherTableProps = {
   data: WeatherSchema[]
 }
 
-const WeatherForecastTable = ({ data }: WeatherForecastTableProps) => {
+const WeatherTable = ({ data }: WeatherTableProps) => {
   return (
     <Table className=" w-full">
       <Thead>
@@ -43,4 +43,4 @@ const WeatherForecastTable = ({ data }: WeatherForecastTableProps) => {
   )
 }
 
-export default WeatherForecastTable
+export default WeatherTable
