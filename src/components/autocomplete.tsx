@@ -29,7 +29,7 @@ const Autocomplete = <T,>({
             placeholder={placeholder}
             displayValue={displayValue}
             onChange={(e) => onInputChange(e.target.value)}
-            className="w-full rounded-md py-2 text-sm leading-5 text-gray-900 px-2 border-2 border-gray-600 pl-6"
+            className="w-full rounded-md py-2 text-[1rem] leading-5 text-gray-900 px-2 border-2 border-gray-600 pl-6"
           />
           <Combobox.Button className="absolute inset-y-0 left-1 flex items-center pr-2">
             <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
