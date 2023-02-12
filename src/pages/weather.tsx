@@ -9,6 +9,7 @@ import {
 import { GetServerSideProps, NextPage } from 'next'
 import { getServerSession } from 'next-auth'
 import LinkButton from '@/components/link-button'
+import Head from 'next/head'
 
 type Props = {
   /**
@@ -23,15 +24,24 @@ const Forecast: NextPage<Props> = ({ weather }) => {
   const isLoggedIn = useIsLoggedIn()
 
   return (
-    <section className="w-full space-y-6">
-      {weather && (
-        <h1 className="text-3xl font-bold text-gray-700">{weather.name}</h1>
-      )}
-      <WeatherTable data={weather ? [weather] : []} />
-      <LinkButton href="/" className="float-right" variant="neutral">
-        Back
-      </LinkButton>
-    </section>
+    <>
+      <Head>
+        <title>
+          {weather?.name
+            ? `${weather.name} - Current Weather`
+            : 'Current Weather'}
+        </title>
+      </Head>
+      <section className="w-full space-y-6">
+        {weather && (
+          <h1 className="text-3xl font-bold text-gray-700">{weather.name}</h1>
+        )}
+        <WeatherTable data={weather ? [weather] : []} />
+        <LinkButton href="/" className="float-right" variant="neutral">
+          Back
+        </LinkButton>
+      </section>
+    </>
   )
 }
 export default Forecast
