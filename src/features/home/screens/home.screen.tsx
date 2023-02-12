@@ -30,6 +30,7 @@ const HomeScreen = () => {
       </div>
       <div className="space-y-2 flex flex-col content-center items-center">
         <Autocomplete
+          placeholder="City"
           value={selected}
           displayValue={(option) => option?.name ?? ''}
           options={options}
@@ -37,7 +38,7 @@ const HomeScreen = () => {
             return (
               <div
                 className={clsx(
-                  'w-full bg-white hover:bg-gray-600 hover:text-white py-2 pl-5 pr-4',
+                  'bg-white hover:bg-gray-600 hover:text-white py-2 pl-5 pr-4',
                   {
                     'bg-blue-600 hover:bg-blue-700':
                       option.lat === selected?.lat &&
@@ -56,11 +57,15 @@ const HomeScreen = () => {
             setQ(newInput)
           }}
         />
-        {selected && (
-          <LinkButton href={`/weather?lat=${selected.lat}&lon=${selected.lon}`}>
-            {`Display Weather (${selected.name})`}
-          </LinkButton>
-        )}
+        <LinkButton
+          href={
+            selected
+              ? `/weather?lat=${selected.lat}&lon=${selected.lon}`
+              : '/weather'
+          }
+        >
+          Display Weather
+        </LinkButton>
       </div>
     </section>
   )
