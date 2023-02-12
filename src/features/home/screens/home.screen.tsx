@@ -7,28 +7,20 @@
 import Autocomplete from '@/components/autocomplete'
 import Button from '@/components/button'
 import { useActiveUser } from '@/components/hooks/useActiveUser'
+import LinkButton from '@/components/link-button'
+import { useLocations } from '@/features/locations/hooks/useLocations'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { optional } from 'zod'
-
-const options = [
-  {
-    name: 'London',
-    lat: 123,
-    lon: 456,
-  },
-  {
-    name: 'Britain',
-    lat: 789,
-    lon: 654,
-  },
-]
 
 const HomeScreen = () => {
   const user = useActiveUser()
 
   const [q, setQ] = useState('')
   const [selected, setSelected] = useState<typeof options[0] | null>(null)
+
+  const locationsQuery = useLocations({ q })
+  const options = locationsQuery.data ? locationsQuery.data : []
 
   return (
     <section className="items-center flex flex-col space-y-16">
@@ -64,7 +56,11 @@ const HomeScreen = () => {
             setQ(newInput)
           }}
         />
-        <Button>Display Weather</Button>
+        {selected && (
+          <LinkButton href={`/weather?lat=${selected.lat}&lon=${selected.lon}`}>
+            {`Display Weather (${selected.name})`}
+          </LinkButton>
+        )}
       </div>
     </section>
   )

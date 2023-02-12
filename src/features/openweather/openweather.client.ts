@@ -33,7 +33,7 @@ type GeocodeProps = {
   /**
    * Search parameter for determining which places to return
    */
-  q: number
+  q: string
   /**
    * How many search results to return
    */
@@ -46,6 +46,7 @@ const geocodeSchema = z.array(
     lon: z.number(),
   }),
 )
+export type GeocodeSchema = z.infer<typeof geocodeSchema>
 
 /**
  * A mini client library that interacts with the openweather API. Guarantees type safety
